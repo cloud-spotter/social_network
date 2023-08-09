@@ -8,15 +8,15 @@ If the table is already created in the database, you can skip this step.
 
 Otherwise, [follow this recipe to design and create the SQL schema for your table](./single_table_design_recipe_template.md).
 
-*In this template, we'll use an example table `books`*
+*In this template, we'll use an example table `students`*
 
 ```
 # EXAMPLE
 
-Table: books
+Table: students
 
 Columns:
-id | title | author_name
+id | name | cohort_name
 ```
 
 ## 2. Create Test SQL seeds
@@ -56,16 +56,16 @@ Usually, the Model class name will be the capitalised table name (single instead
 
 ```python
 # EXAMPLE
-# Table name: books
+# Table name: students
 
 # Model class
 # (in lib/student.py)
-class Book
+class Student
 
 
 # Repository class
 # (in lib/student_repository.py)
-class BookRepository
+class StudentRepository
 
 ```
 
@@ -75,16 +75,16 @@ Define the attributes of your Model class. You can usually map the table columns
 
 ```python
 # EXAMPLE
-# Table name: books
+# Table name: students
 
 # Model class
-# (in lib/book.py)
+# (in lib/student.py)
 
-class Book:
+class Student:
     def __init__(self):
         self.id = 0
-        self.title = ""
-        self.author_name = ""
+        self.name = ""
+        self.cohort_name = ""
 
         # Replace the attributes by your own columns.
 
@@ -92,13 +92,13 @@ class Book:
 # We can set the attributes to default empty values and set them later,
 # here's an example:
 #
-# >>> book = Book()
-# >>> book.title = "Emma"
-# >>> book.author_name = "Jane Austen"
-# >>> book.name
-# 'Emma'
-# >>> book.author_name
-# 'Jane Austen'
+# >>> student = Student()
+# >>> student.name = "Will"
+# >>> student.cohort_name = "September Devs"
+# >>> student.name
+# 'Will'
+# >>> student.cohort_name
+# 'September Devs'
 
 ```
 
@@ -112,30 +112,30 @@ Using comments, define the method signatures (arguments and return value) and wh
 
 ```python
 # EXAMPLE
-# Table name: books
+# Table name: students
 
 # Repository class
-# (in lib/book_repository.py)
+# (in lib/student_repository.py)
 
-class BookRepository():
+class StudentRepository():
 
     # Selecting all records
     # No arguments
     def all():
         # Executes the SQL query:
-        # SELECT id, title, author_name FROM books;
-        # Returns an array of Book objects.
+        # SELECT id, name, cohort_name FROM students;
 
+        # Returns an array of Student objects.
 
-    # Gets a single record by its ID
-    # One argument: the id (number)
-    # def find(id):
-    #     # Executes the SQL query:
-    #     # SELECT id, name, cohort_name FROM books WHERE id = $1;
+        # Gets a single record by its ID
+        # One argument: the id (number)
+    def find(id):
+        # Executes the SQL query:
+        # SELECT id, name, cohort_name FROM students WHERE id = $1;
 
-    #     # Returns a single Student object.
+        # Returns a single Student object.
 
-    #     # Add more methods below for each operation you'd like to implement.
+        # Add more methods below for each operation you'd like to implement.
 
     # def create(student)
     # 
@@ -158,29 +158,32 @@ These examples will later be encoded as Pytest tests.
 # EXAMPLES
 
 # 1
-# Get all books
+# Get all students
 
-repo = BookRepository()
-books = repo.all()
-len(books) # =>  5
+repo = StudentRepository()
 
-books[0].id # =>  1
-books[0].title # =>  'Nineteen Eighty-Four'
-books[0].author_name # =>  'George Orwell'
+students = repo.all()
 
-# etc. for all records
+len(students) # =>  2
 
+students[0].id # =>  1
+students[0].name # =>  'David'
+students[0].cohort_name # =>  'April 2022'
+
+students[1].id # =>  2
+students[1].name # =>  'Anna'
+students[1].cohort_name # =>  'May 2022'
 
 # 2
 # Get a single student
 
-repo = BookRepository()
+repo = StudentRepository()
 
-book = repo.find(1)
+student = repo.find(1)
 
-book.id # =>  1
-book.title # =>  'Nineteen Eighty-Four'
-book.author_name # =>  'George Orwell'
+student.id # =>  1
+student.name # =>  'David'
+student.cohort_name # =>  'April 2022'
 
 # Add more examples for each method
 ```
