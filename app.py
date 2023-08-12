@@ -1,39 +1,27 @@
 from lib.database_connection import DatabaseConnection
-# from lib.artist_repository import ArtistRepository # Update for book_store
-from lib.book_repository import *
-
+from lib.post_repository import *
+from lib.posts import *
+from lib.account_repository import *
+from lib.account import *
 
 # Connect to the database
 connection = DatabaseConnection()
 connection.connect()
 
 # Seed with some seed data
-connection.seed("seeds/book_store.sql")
+connection.seed("seeds/social_network.sql")
 
-# Retrieve all books
-book_repository = BookRepository(connection)
-books = book_repository.all()
+# Retrieve all posts
+posts_repository = PostRepository(connection)
+posts = posts_repository.all()
 
-for book in books:
-    print(book)         
+for post in posts:
+    print(post)         
 
-# Retrieve all artists
-# artist_repository = ArtistRepository(connection)  # Update for book_store
-# artists = artist_repository.all()
-
-# # List them out
-# for artist in artists:                            # Update for book_store
-#     print(artist)
-
-
-# Examples from music_library seed (music_library project)
-# # Seed with some seed data
-# connection.seed("seeds/music_library.sql")
-
-# # Retrieve all artists
-# artist_repository = ArtistRepository(connection)
-# artists = artist_repository.all()
+# Retrieve all accounts
+account_repository = AccountRepository(connection)  
+accounts = account_repository.all()
 
 # # List them out
-# for artist in artists:
-#     print(artist)
+for account in accounts:                            
+    print(account)
